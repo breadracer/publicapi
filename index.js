@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 let page_length = 5;
 
 app.get('/', (req, res) => {
-  res.render('index', { people });
+  res.render('index', {});
   
 });
 

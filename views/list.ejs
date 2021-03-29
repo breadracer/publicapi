@@ -5,8 +5,12 @@
 </head>
 
 <body>
+  <form id='home-form' action='/' method='get'>
+    <input id='home-btn' type='button' value='Home'>
+  </form>
+  
 
-  <form action='/search' method='get'>
+  <form id='search-form' action='/search' method='get'>
     <input type='text' name='name' value='<%= name %>' placeholder='University Name'>
     <input type='text' name='country' value='<%= country %>' placeholder='Country'>
     <input type='hidden' name='page' value='1' />
@@ -21,18 +25,56 @@
   </div>
   <% }); %>
 
-  <form action='/search' method='get'>
+  <form id='page-form'  action='/search' method='get'>
     <input type='hidden' name='name' value='<%= name %>' />
     <input type='hidden' name='country' value='<%= country %>' />
     <div>
-        Page <input type='number' name='page' value='<%= page %>' max='<%= Math.ceil(total_length / page_length) %>' min='1'> of <%= Math.ceil(total_length / page_length) %> <input type='submit' value='Go'>
+        <input type='button' id='previous-page' value='Previous'>
+        Page <input id='page-number' type='number' name='page' value='<%= page %>' max='<%= Math.ceil(total_length / page_length) %>' min='1'> of <%= Math.ceil(total_length / page_length) %> <input type='submit' value='Go'>
+        <input type='button' id='next-page' value='Next'>
     </div>
-    <!-- <input type='button' id='previous-page' value='Previous'>
-    <input type='button' id='next-page' value='Next'> -->
+    
+    
   </form>
 
   <script>
+    let previous_btn = document.getElementById('previous-page');
+    let next_btn = document.getElementById('next-page');
+    let page_form = document.getElementById('page-form');
+    let page_num = document.getElementById('page-number');
+    let home_form = document.getElementById('home-form');
+    let home_btn = document.getElementById('home-btn');
+
+    home_btn.addEventListener('click', () => {
+      home_form.submit();
+    });
+
+
+    let page = <%= page %>;
     
+
+    window.onload = () => {
+      console.log(page);
+      console.log(page <= 1);
+      console.log(page >= <%= Math.ceil(total_length / page_length) %>);
+      previous_btn.removeAttribute('disabled');
+      next_btn.removeAttribute('disabled');
+
+      if (page <= 1)
+        previous_btn.setAttribute('disabled', true);
+      if (page >= <%= Math.ceil(total_length / page_length) %>)
+        next_btn.setAttribute('disabled', true);
+    }
+
+    previous_btn.addEventListener('click', () => {
+      page_num.setAttribute('value', page - 1);
+      page_form.submit();
+    });
+    next_btn.addEventListener('click', () => {
+      page_num.setAttribute('value', page + 1);
+      page_form.submit();
+    });
+
   </script>
 
 </body>
