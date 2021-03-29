@@ -18,13 +18,16 @@ app.get('/', (req, res) => {
   
 });
 
-app.post('/search', async (req, res) => {
-  console.log(req.body);
+app.get('/search', async (req, res) => {
+  console.log(req.param);
+  let name = req.param('name');
+  let country = req.param('country');
   let universities = await axios({
     method: 'get',
-    url: `http://universities.hipolabs.com/search?name=${req.body.name}`
+    url: `http://universities.hipolabs.com/search?name=${
+      name ? name : ''}&country=${country ? country : ''}`
   });
-  // console.log(universities);
+  console.log(`http://universities.hipolabs.com/search?name=${name ? name : ''}&country=${country ? country : ''}`);
   res.render('list', { universities: universities.data });
 
 });
