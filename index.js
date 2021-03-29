@@ -13,18 +13,26 @@ app.use(express.urlencoded({ extended: true }));
 // Length of a page for pagination
 let page_length = 5;
 
+// In-memory cache of search results
+let cache = {};
+
 app.get('/', (req, res) => {
   res.render('index', {});
   
 });
 
 app.get('/search', async (req, res) => {
+  // Setup the timer
+  let timer_start = process.hrtime();
+
   // Get the request parameters
   let name = req.param('name');
   let country = req.param('country');
   let page = Number(req.param('page'));
 
+  
   // Make the API call
+  console.log('Made a request to API');
   let universities = await axios({
     method: 'get',
     url: `http://universities.hipolabs.com/search?name=${
@@ -38,9 +46,12 @@ app.get('/search', async (req, res) => {
   if (total_length < end) end = total_length;
   let data = universities.data.slice(start, end);
 
-  console.log(total_length)
+  let latency = process.hrtime(timer_start);
+  let latency_ms = latency[0] * 1000 + latency[1] / 1000000;
+  console.log(latency_ms);
+
   // Rendering
-  res.render('list', { data, total_length, page_length, name, country, page });
+  res.render('list', { data, total_length, page_length, name, country, page, latency_ms });
 
 });
 

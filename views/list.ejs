@@ -15,6 +15,7 @@
     <input type='text' name='country' value='<%= country %>' placeholder='Country'>
     <input type='hidden' name='page' value='1' />
     <input type='submit'>
+    <span>Server latency: <%= latency_ms %>ms</span>
   </form>
 
   <% data.forEach(function(univ) { %>
