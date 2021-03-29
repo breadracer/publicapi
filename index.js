@@ -59,10 +59,12 @@ app.get('/search', async (req, res) => {
 
   let latency = process.hrtime(timer_start);
   let latency_ms = latency[0] * 1000 + latency[1] / 1000000;
+  console.log(cache.size + '/' + cache.max_size);
   console.log(latency_ms);
 
   // Rendering
-  res.render('list', { data, total_length, page_length, name, country, page, latency_ms, cache_hit });
+  res.render('list', { data, total_length, page_length, name, country, page, latency_ms, cache_hit,
+    cache_size: cache.size, cache_max_size: cache.max_size });
 
 });
 

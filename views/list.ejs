@@ -15,13 +15,15 @@
     <input type='text' name='country' value='<%= country %>' placeholder='Country'>
     <input type='hidden' name='page' value='1' />
     <input type='submit'>
-    <span>Server latency: <%= latency_ms %>ms</span>
-    <% if (cache_hit) { %>
-      <span>Cache Hit!</span>
-    <% } else { %>
-      <span>Cache Miss</span>
-    <% } %>
   </form>
+
+  <p>Server latency: <%= latency_ms %>ms</p>
+  <% if (cache_hit) { %>
+    <p>Cache Hit!</p>
+  <% } else { %>
+    <p>Cache Miss</p>
+  <% } %>
+  <p>Cache capacity: <%= cache_size %>/<%= cache_max_size %></p>
 
   <% data.forEach(function(univ) { %>
   <div>
