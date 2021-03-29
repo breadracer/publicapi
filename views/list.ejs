@@ -7,18 +7,34 @@
 <body>
 
   <form action='/search' method='get'>
-    <input type='text' name='name' value='' placeholder='University Name'>
-    <input type='text' name='country' value='' placeholder='Country'>
+    <input type='text' name='name' value='<%= name %>' placeholder='University Name'>
+    <input type='text' name='country' value='<%= country %>' placeholder='Country'>
+    <input type='hidden' name='page' value='1' />
     <input type='submit'>
   </form>
 
-  <% universities.forEach(function(univ) { %>
+  <% data.forEach(function(univ) { %>
   <div>
     <h3><%= univ.name %></h3>
     <h5><%= univ.country %></h5>
     <h5><a href='<%= univ.web_pages[0] %>'><%= univ.web_pages[0] %></a></h5>
   </div>
   <% }); %>
+
+  <form action='/search' method='get'>
+    <input type='hidden' name='name' value='<%= name %>' />
+    <input type='hidden' name='country' value='<%= country %>' />
+    <div>
+        Page <input type='number' name='page' value='<%= page %>' max='<%= Math.ceil(total_length / page_length) %>' min='1'> of <%= Math.ceil(total_length / page_length) %> <input type='submit' value='Go'>
+    </div>
+    <!-- <input type='button' id='previous-page' value='Previous'>
+    <input type='button' id='next-page' value='Next'> -->
+  </form>
+
+  <script>
+    
+  </script>
+
 </body>
 
 </html>
