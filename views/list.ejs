@@ -1,13 +1,23 @@
 <html>
-  <head>
 
-  </head>
-  <body>
+<head>
 
+</head>
 
-<% universities.forEach(function(univ) { %>
-  <p><%= univ.name %></p> 
-<% }); %>
-  </body>
+<body>
+
+  <form action='/search' method='POST'>
+    <input type='text' name='name' value='' placeholder='University Name'>
+    <input type='submit'>
+  </form>
+
+  <% universities.forEach(function(univ) { %>
+  <div>
+    <h3><%= univ.name %></h3>
+    <h5><%= univ.country %></h5>
+    <h5><a href='<%= univ.web_pages[0] %>'><%= univ.web_pages[0] %></a></h5>
+  </div>
+  <% }); %>
+</body>
 
 </html>
