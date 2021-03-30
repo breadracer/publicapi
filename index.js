@@ -6,11 +6,12 @@ const InMemoryCache = require('./cache');
 
 const app = express();
 
-// app.use(express.static('public'));
 app.set('view engine', 'ejs');
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.static(__dirname + '/public'));
 
 // Length of a page for pagination
 let page_length = 5;
@@ -33,12 +34,6 @@ app.get('/search', async (req, res) => {
   let country = req.param('country');
   let page = Number(req.param('page'));
   let data = [];
-
-  // Input sanity check: letters only
-  if (!(/^[a-zA-Z]*$/.test(name) && /^[a-zA-Z]*$/.test(country))) {
-    res.render('error', { total_length: 0, page_length, name, country, page });
-    return;
-  }
 
   if (cache.contains(name, country)) {
     data = cache.get(name, country);
