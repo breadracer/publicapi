@@ -21,6 +21,7 @@ let cache = new InMemoryCache(10000);
 let cache_hit;
 
 app.get('/', (req, res) => {
+  console.log('hi')
   res.render('index', {});
 
 });

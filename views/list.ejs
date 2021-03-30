@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>University Search</title>
   <link href="/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet">
 
 </head>
@@ -42,9 +43,9 @@
         <% data.forEach(function(univ) { %>
         <div class='d-flex flex-column' style='margin-top: 20px; margin-bottom:  20px'>
           <div>
-              <h3><%= univ.name %></h3>
-              <span style='margin-right: 20px'><%= univ.country %></span>
-              <span></span><a href='<%= univ.web_pages[0] %>'><%= univ.web_pages[0] %></a></span>
+            <h3><%= univ.name %></h3>
+            <span style='margin-right: 20px'><%= univ.country %></span>
+            <span></span><a href='<%= univ.web_pages[0] %>'><%= univ.web_pages[0] %></a></span>
           </div>
         </div>
         <% }); %>
