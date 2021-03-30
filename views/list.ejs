@@ -7,67 +7,83 @@
 </head>
 
 <body>
-  <form id='home-form' action='/' method='get'>
-    <input id='home-btn' type='button' value='Home'>
-  </form>
-  
+  <div style='height: 100vh'>
+    <div class='d-flex flex-column align-items-between h-100' style='padding: 20px'>
+      <div class='d-flex flex-row align-items-center justify-content-between'>
+        <div>
+          <div>
+            <!-- <form id='home-form' action='/' method='get'>
+              <input id='home-btn' type='button' value='Home'>
+            </form> -->
+            <h2><a href='/' style='text-decoration: none; color: black'>Search for your university!</a></h2>
+          </div>
+          <div>
+            <form id='search-form' action='/search' method='get'>
+              <input type='text' name='name' value='<%= name %>' placeholder='University Name'>
+              <input type='text' name='country' value='<%= country %>' placeholder='Country'>
+              <input type='hidden' name='page' value='1' />
+              <input type='submit'>
+            </form>
+          </div>
+        </div>
+        <div>
+          <h6>Server latency: <%= latency_ms %>ms</h6>
+          <% if (cache_hit) { %>
+          <h6>Cache Hit!</h6>
+          <% } else { %>
+          <h6>Cache Miss</h6>
+          <% } %>
+          <p>Cache capacity: <%= cache_size %>/<%= cache_max_size %></p>
+        </div>
+      </div>
 
-  <form id='search-form' action='/search' method='get'>
-    <input type='text' name='name' value='<%= name %>' placeholder='University Name'>
-    <input type='text' name='country' value='<%= country %>' placeholder='Country'>
-    <input type='hidden' name='page' value='1' />
-    <input type='submit'>
-  </form>
+      <div class='d-flex flex-column justify-content-around'>
+        <% if (data.length > 0) { %>
+        <% data.forEach(function(univ) { %>
+        <div class='d-flex flex-column' style='margin-top: 20px; margin-bottom:  20px'>
+          <div>
+              <h3><%= univ.name %></h3>
+              <span style='margin-right: 20px'><%= univ.country %></span>
+              <span></span><a href='<%= univ.web_pages[0] %>'><%= univ.web_pages[0] %></a></span>
+          </div>
+        </div>
+        <% }); %>
+        <% } else { %>
+        <div>
+          <h2>No result found.</h2>
+        </div>
+        <% } %>
+      </div>
 
-  <p>Server latency: <%= latency_ms %>ms</p>
-  <% if (cache_hit) { %>
-    <p>Cache Hit!</p>
-  <% } else { %>
-    <p>Cache Miss</p>
-  <% } %>
-  <p>Cache capacity: <%= cache_size %>/<%= cache_max_size %></p>
+      <div class='flex-fill'>
+        <form id='page-form' action='/search' method='get'>
+          <input type='hidden' name='name' value='<%= name %>' />
+          <input type='hidden' name='country' value='<%= country %>' />
+          <div>
+            <input type='button' id='previous-page' value='Previous'>
+            Page <input id='page-number' type='number' name='page' value='<%= page %>'
+              max='<%= Math.max(Math.ceil(total_length / page_length), 1) %>' min='1'> of
+            <%= Math.max(Math.ceil(total_length / page_length), 1) %> <input type='submit' value='Go'>
+            <input type='button' id='next-page' value='Next'>
+          </div>
 
-  <% if (data.length > 0) { %>
-    <% data.forEach(function(univ) { %>
-    <div>
-      <h3><%= univ.name %></h3>
-      <h5><%= univ.country %></h5>
-      <h5><a href='<%= univ.web_pages[0] %>'><%= univ.web_pages[0] %></a></h5>
+
+        </form>
+      </div>
+
     </div>
-    <% }); %>
-  <% } else { %>
-    <div>
-      <h2>No result found.</h2>
-    </div>
-  <% } %>
+  </div>
 
-  <form id='page-form'  action='/search' method='get'>
-    <input type='hidden' name='name' value='<%= name %>' />
-    <input type='hidden' name='country' value='<%= country %>' />
-    <div>
-        <input type='button' id='previous-page' value='Previous'>
-        Page <input id='page-number' type='number' name='page' value='<%= page %>' max='<%= Math.max(Math.ceil(total_length / page_length), 1) %>' min='1'> of <%= Math.max(Math.ceil(total_length / page_length), 1) %> <input type='submit' value='Go'>
-        <input type='button' id='next-page' value='Next'>
-    </div>
-    
-    
-  </form>
+
 
   <script>
     let previous_btn = document.getElementById('previous-page');
     let next_btn = document.getElementById('next-page');
     let page_form = document.getElementById('page-form');
     let page_num = document.getElementById('page-number');
-    let home_form = document.getElementById('home-form');
-    let home_btn = document.getElementById('home-btn');
-
-    home_btn.addEventListener('click', () => {
-      home_form.submit();
-    });
-
 
     let page = <%= page %>;
-    
+
 
     window.onload = () => {
       console.log(page);
@@ -79,7 +95,7 @@
       if (page <= 1)
         previous_btn.setAttribute('disabled', true);
       if (page >= <%= Math.max(Math.ceil(total_length / page_length), 1) %>)
-        next_btn.setAttribute('disabled', true);
+      next_btn.setAttribute('disabled', true);
     }
 
     previous_btn.addEventListener('click', () => {

@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link href="/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet">
 
-  </head>
-  <body>
-      <form action='/search' method='get'>
-        <input type='text' name='name' value='' placeholder='University Name'>
-        <input type='text' name='country' value='' placeholder='Country'>
-        <input type='hidden' name='page' value='1' />
+<head>
+  <link href="/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet">
 
-        <input type='submit'>
-      </form>
-    <p>This is the index page.</p>
-  </body>
+</head>
+
+<body>
+  <div style='height: 100vh'>
+
+    <div class='h-100 d-flex flex-column align-items-center justify-content-center'>
+      <div style="margin-bottom: 50px">
+        <h1>Search for your university!</h1>
+      </div>
+      <div style='margin-bottom: 150px'>
+        <form action='/search' method='get'>
+          <input type='text' name='name' value='' placeholder='University Name'>
+          <input type='text' name='country' value='' placeholder='Country'>
+          <input type='hidden' name='page' value='1' />
+
+          <input type='submit'>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <p>This is the index page.</p> -->
+</body>
+
 </html>
