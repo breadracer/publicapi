@@ -11,6 +11,7 @@ class InMemoryCache {
     if (key in this.db) return;
     let data_size = data.length;
 
+    // Remove oldest content while the cache is full
     while (data_size + this.size > this.max_size) {
       this.size -= this.db[this.key_queue[0]].length;
       delete this.db[this.key_queue[0]];
