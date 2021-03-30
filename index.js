@@ -34,6 +34,12 @@ app.get('/search', async (req, res) => {
   let page = Number(req.param('page'));
   let data = [];
 
+  // Input sanity check: letters only
+  if (!(/^[a-zA-Z]*$/.test(name) && /^[a-zA-Z]*$/.test(country))) {
+    res.render('error', { total_length: 0, page_length, name, country, page });
+    return;
+  }
+
   if (cache.contains(name, country)) {
     data = cache.get(name, country);
     cache_hit = true;

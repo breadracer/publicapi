@@ -8,7 +8,7 @@
   <form id='home-form' action='/' method='get'>
     <input id='home-btn' type='button' value='Home'>
   </form>
-  
+
 
   <form id='search-form' action='/search' method='get'>
     <input type='text' name='name' value='<%= name %>' placeholder='University Name'>
@@ -17,38 +17,22 @@
     <input type='submit'>
   </form>
 
-  <p>Server latency: <%= latency_ms %>ms</p>
-  <% if (cache_hit) { %>
-    <p>Cache Hit!</p>
-  <% } else { %>
-    <p>Cache Miss</p>
-  <% } %>
-  <p>Cache capacity: <%= cache_size %>/<%= cache_max_size %></p>
+  <div>
+    <h2>Invalid input. Please enter letters only in the search fields.</h2>
+  </div>
 
-  <% if (data.length > 0) { %>
-    <% data.forEach(function(univ) { %>
-    <div>
-      <h3><%= univ.name %></h3>
-      <h5><%= univ.country %></h5>
-      <h5><a href='<%= univ.web_pages[0] %>'><%= univ.web_pages[0] %></a></h5>
-    </div>
-    <% }); %>
-  <% } else { %>
-    <div>
-      <h2>No result found.</h2>
-    </div>
-  <% } %>
-
-  <form id='page-form'  action='/search' method='get'>
+  <form id='page-form' action='/search' method='get'>
     <input type='hidden' name='name' value='<%= name %>' />
     <input type='hidden' name='country' value='<%= country %>' />
     <div>
-        <input type='button' id='previous-page' value='Previous'>
-        Page <input id='page-number' type='number' name='page' value='<%= page %>' max='<%= Math.max(Math.ceil(total_length / page_length), 1) %>' min='1'> of <%= Math.max(Math.ceil(total_length / page_length), 1) %> <input type='submit' value='Go'>
-        <input type='button' id='next-page' value='Next'>
+      <input type='button' id='previous-page' value='Previous'>
+      Page <input id='page-number' type='number' name='page' value='<%= page %>'
+        max='<%= Math.max(Math.ceil(total_length / page_length), 1) %>' min='1'> of
+      <%= Math.max(Math.ceil(total_length / page_length), 1) %> <input type='submit' value='Go'>
+      <input type='button' id='next-page' value='Next'>
     </div>
-    
-    
+
+
   </form>
 
   <script>
@@ -65,7 +49,7 @@
 
 
     let page = <%= page %>;
-    
+
 
     window.onload = () => {
       console.log(page);
@@ -77,7 +61,7 @@
       if (page <= 1)
         previous_btn.setAttribute('disabled', true);
       if (page >= <%= Math.max(Math.ceil(total_length / page_length), 1) %>)
-        next_btn.setAttribute('disabled', true);
+      next_btn.setAttribute('disabled', true);
     }
 
     previous_btn.addEventListener('click', () => {
@@ -90,7 +74,6 @@
     });
 
   </script>
-
 </body>
 
 </html>
